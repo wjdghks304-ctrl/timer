@@ -5,7 +5,7 @@ import math
 # 1. 페이지 기본 설정
 st.set_page_config(
     page_title="나만의 반응형 타이머",
-    page_icon="🌊", # 아이콘도 파란색 물결로 변경해 보았습니다!
+    page_icon="🌊", 
     layout="centered"
 )
 
@@ -16,7 +16,7 @@ st.markdown("""
         background-color: #ffffff;
         border-radius: 20px;
         padding: 30px;
-        box-shadow: 0px 8px 16px rgba(30, 144, 255, 0.15); /* 그림자도 살짝 푸른빛이 돌게 변경 */
+        box-shadow: 0px 8px 16px rgba(30, 144, 255, 0.15); /* 푸른빛 그림자 */
         text-align: center;
         margin: 20px auto;
     }
@@ -24,7 +24,7 @@ st.markdown("""
     .timer-text {
         font-size: clamp(4rem, 15vw, 8rem);
         font-weight: 800;
-        color: #1E90FF; /* 🔵 시원한 파란색으로 변경! */
+        color: #1E90FF; /* 🔵 시원한 파란색 */
         line-height: 1.2;
         font-variant-numeric: tabular-nums; 
     }
@@ -82,7 +82,9 @@ st.title("🌊 나만의 반응형 타이머")
 is_disabled = st.session_state.state in ['running', 'paused']
 
 st.markdown("### 1️⃣ 시간 설정")
-col1, col2, col3, col4 = st.columns(4)
+# 💡 화면을 5칸으로 나누어 30분 버튼이 들어갈 자리를 마련합니다!
+col1, col2, col3, col4, col5 = st.columns(5)
+
 with col1:
     if st.button("1분", use_container_width=True, disabled=is_disabled):
         set_quick_time(1)
@@ -95,6 +97,10 @@ with col3:
 with col4:
     if st.button("10분", use_container_width=True, disabled=is_disabled):
         set_quick_time(10)
+with col5:
+    # 💡 30분 버튼이 추가된 부분입니다.
+    if st.button("30분", use_container_width=True, disabled=is_disabled):
+        set_quick_time(30)
 
 col_m, col_s = st.columns(2)
 with col_m:
@@ -154,8 +160,8 @@ def display_timer_fragment():
 
 display_timer_fragment()
 
-# 7. 종료 시 시각적 효과 (풍선 대신 눈 내리는 효과로 변경해 보았습니다!)
+# 7. 종료 시 시각적 효과
 if st.session_state.state == 'finished' and not st.session_state.balloon_shown:
     st.success("타이머가 종료되었습니다! 수고하셨습니다. 👏")
-    st.snow() # 파란 테마에 어울리게 눈이 내립니다.
+    st.snow() # 파란 테마에 어울리는 눈 내림 효과
     st.session_state.balloon_shown = True
